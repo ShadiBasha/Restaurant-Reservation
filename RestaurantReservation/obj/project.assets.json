@@ -5,11 +5,24 @@
       "RestaurantReservation.Db/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "RestaurantReservationDbContext": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/RestaurantReservation.Db.dll": {}
         },
         "runtime": {
           "bin/placeholder/RestaurantReservation.Db.dll": {}
+        }
+      },
+      "RestaurantReservationDbContext/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/RestaurantReservationDbContext.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RestaurantReservationDbContext.dll": {}
         }
       }
     }
@@ -19,6 +32,11 @@
       "type": "project",
       "path": "../RestaurantReservation.Db/RestaurantReservation.Db.csproj",
       "msbuildProject": "../RestaurantReservation.Db/RestaurantReservation.Db.csproj"
+    },
+    "RestaurantReservationDbContext/1.0.0": {
+      "type": "project",
+      "path": "../RestaurantReservationDbContext/RestaurantReservationDbContext.csproj",
+      "msbuildProject": "../RestaurantReservationDbContext/RestaurantReservationDbContext.csproj"
     }
   },
   "projectFileDependencyGroups": {

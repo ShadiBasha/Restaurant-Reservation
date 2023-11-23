@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "RestaurantReservationDbContext/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/RestaurantReservationDbContext.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RestaurantReservationDbContext.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "RestaurantReservationDbContext/1.0.0": {
+      "type": "project",
+      "path": "../RestaurantReservationDbContext/RestaurantReservationDbContext.csproj",
+      "msbuildProject": "../RestaurantReservationDbContext/RestaurantReservationDbContext.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "RestaurantReservationDbContext >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Shadi Basha\\.nuget\\packages\\": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservationDbContext\\RestaurantReservationDbContext.csproj": {
+              "projectPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservationDbContext\\RestaurantReservationDbContext.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
