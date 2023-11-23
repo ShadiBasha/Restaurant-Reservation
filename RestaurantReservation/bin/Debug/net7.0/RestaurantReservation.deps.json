@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "RestaurantReservation/1.0.0": {
+        "dependencies": {
+          "RestaurantReservation.Db": "1.0.0"
+        },
+        "runtime": {
+          "RestaurantReservation.dll": {}
+        }
+      },
+      "RestaurantReservation.Db/1.0.0": {
+        "dependencies": {
+          "RestaurantReservationDbContext": "1.0.0"
+        },
+        "runtime": {
+          "RestaurantReservation.Db.dll": {}
+        }
+      },
+      "RestaurantReservationDbContext/1.0.0": {
+        "runtime": {
+          "RestaurantReservationDbContext.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RestaurantReservation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RestaurantReservation.Db/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RestaurantReservationDbContext/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
