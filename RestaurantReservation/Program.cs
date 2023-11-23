@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using RestaurantReservationDbContext;
+using RestaurantReservation.Db;
+RestaurantDbContext _context = new RestaurantDbContext();
 
-Console.WriteLine("Hello, World!");
+foreach (var table in _context.Tables.ToList())
+{
+    Console.WriteLine(table);
+}
