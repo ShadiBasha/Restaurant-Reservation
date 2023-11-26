@@ -12,7 +12,11 @@ namespace RestaurantReservation.Db
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<ReservationView> ReservationViews { get; set; }
         
+        public DbSet<EmployeeView> EmployeeView { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
@@ -22,6 +26,20 @@ namespace RestaurantReservation.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<ReservationView>(res =>
+                {
+                    res.HasNoKey();
+                    res.ToView("ReservationView");
+                });
+            
+            modelBuilder
+                .Entity<EmployeeView>(emp =>
+                {
+                    emp.HasNoKey();
+                    emp.ToView("EmployeeView");
+                });
+            
             var customersList = new Customer[]
             {
                 new Customer
