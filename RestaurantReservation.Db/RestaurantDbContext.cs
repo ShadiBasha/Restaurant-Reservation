@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db;
-namespace RestaurantReservationDbContext
+
+namespace RestaurantReservation.Db
 {
     public class RestaurantDbContext : DbContext
     {
