@@ -1,8 +1,8 @@
-﻿using RestaurantReservation.Db;
+﻿using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class ReservationCrud : ICrud<Reservation>
+public class ReservationRepository : ICrud<Reservation>
 {
     public void Create(Reservation reservation)
     {
@@ -35,5 +35,19 @@ public class ReservationCrud : ICrud<Reservation>
         }
         context.Remove(reservation);
         context.SaveChanges();
+    }
+    
+    public static void GetReservationsByCustomer(int customerId)
+    {
+        var context = new RestaurantDbContext();
+        var customerReservations = context.Reservations.Where(reservation => reservation.CustomerId == customerId).ToList();
+        foreach (var reservation in customerReservations)
+        {
+            Console.WriteLine($"""
+                               Reservation Date :{reservation.ReservationDate}
+                               Reservation Party Size : {reservation.PartySize}
+                               -----------------------------
+                               """);
+        }
     }
 }

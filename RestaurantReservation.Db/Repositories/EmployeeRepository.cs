@@ -1,8 +1,8 @@
-﻿using RestaurantReservation.Db;
+﻿using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class EmployeeCrud : ICrud<Employee>
+public class EmployeeRepository : ICrud<Employee>
 {
     public void Create(Employee employee)
     {
@@ -32,5 +32,19 @@ public class EmployeeCrud : ICrud<Employee>
             throw new Exception("Employee does not exist");
         context.Employees.Remove(employee);
         context.SaveChanges();
+    }
+    
+    public static void ListManagers()
+    {
+        var context = new RestaurantDbContext();
+        var managers = context.Employees.Where(employee => employee.Position == "Manager").ToList();
+        foreach (var manager in managers)
+        {
+            Console.WriteLine($"""
+                               Name : {manager.FirstName} {manager.LastName}
+                               Restaurant Id : {manager.RestaurantId}
+                               -----------------------------
+                               """);
+        }
     }
 }

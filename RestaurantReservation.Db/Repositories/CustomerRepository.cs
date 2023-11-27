@@ -1,8 +1,9 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class CustomerCrud : ICrud<Customer>
+public class CustomerRepository : ICrud<Customer>
 {
     public void Create(Customer customer)
     {
@@ -34,5 +35,16 @@ public class CustomerCrud : ICrud<Customer>
         }
         context.Customers.Remove(customerToDelete);
         context.SaveChanges();
+    }
+    
+    public static List<Customer>? GetCustomersWithPartySizeGreaterThan(int partySize)
+    {
+        var context = new RestaurantDbContext();
+        var result = context.Customers
+            .FromSqlRaw("""
+                        CustomersReservations {0}
+                        """, partySize)
+            .ToList();
+        return result;
     }
 }

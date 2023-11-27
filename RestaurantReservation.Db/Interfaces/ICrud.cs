@@ -1,4 +1,4 @@
-﻿namespace RestaurantReservation.CRUDs;
+﻿namespace RestaurantReservation.Db.Interfaces;
 
 public interface ICrud<T> where T : class
 {

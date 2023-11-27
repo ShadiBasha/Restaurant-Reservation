@@ -1,8 +1,8 @@
-﻿using RestaurantReservation.Db;
+﻿using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class TableCrud : ICrud<Table>
+public class TableRepository : ICrud<Table>
 {
     public void Create(Table table)
     {

@@ -1,0 +1,57 @@
+info: 11/27/2023 09:10:47.823 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (23ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 11/27/2023 09:10:47.900 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (65ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 11/27/2023 09:10:47.904 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 11/27/2023 09:10:47.905 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 11/27/2023 09:10:47.933 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: 11/27/2023 09:10:48.056 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Orders] SET [OrderDate] = '2023-11-27T11:09:10.7422767+02:00'
+      WHERE [OrderId] = 1;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.058 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Orders] SET [OrderDate] = '2023-11-27T10:09:10.7422774+02:00'
+      WHERE [OrderId] = 2;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.058 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Orders] SET [OrderDate] = '2023-11-27T12:09:10.7422778+02:00'
+      WHERE [OrderId] = 3;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.059 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Orders] SET [OrderDate] = '2023-11-27T14:09:10.7422781+02:00'
+      WHERE [OrderId] = 4;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.060 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Orders] SET [OrderDate] = '2023-11-27T13:09:10.7422785+02:00'
+      WHERE [OrderId] = 5;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.063 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Reservations] SET [ReservationDate] = '2023-11-29T09:09:10.7422673+02:00'
+      WHERE [ReservationId] = 1;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.064 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Reservations] SET [ReservationDate] = '2023-11-28T09:09:10.7422747+02:00'
+      WHERE [ReservationId] = 2;
+      SELECT @@ROWCOUNT;
+info: 11/27/2023 09:10:48.064 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      UPDATE [Reservations] SET [ReservationDate] = '2023-11-30T09:09:10.7422753+02:00'
+      WHERE [ReservationId] = 3;
+      SELECT @@ROWCOUNT;

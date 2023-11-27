@@ -1,8 +1,9 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class OrderCrud : ICrud<Order>
+public class OrderRepository : ICrud<Order>
 {
     public void Create(Order order)
     {
@@ -32,5 +33,20 @@ public class OrderCrud : ICrud<Order>
             throw new Exception("Order does not exist"); 
         context.Orders.Remove(order);
         context.SaveChanges();
+    }
+    
+    public static void CalculateAverageOrderAmount(int employeeId)
+    {
+        var context = new RestaurantDbContext();
+        var employeeAverageTotalAmount = context.Employees
+            .Include(employee => employee.Orders)
+            .FirstOrDefault(employee => employee.EmployeeId == employeeId)?
+            .Orders
+            .Average(order => order.TotalAmount);
+        if (employeeAverageTotalAmount == null)
+        {
+            throw new Exception("Employee ID does not exist");
+        }else
+            Console.WriteLine($"Employee {employeeId} Average Order Amount is {employeeAverageTotalAmount}$");
     }
 }

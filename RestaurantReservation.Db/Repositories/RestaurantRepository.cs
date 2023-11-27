@@ -1,8 +1,9 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Interfaces;
 
-namespace RestaurantReservation.CRUDs;
+namespace RestaurantReservation.Db.Repositories;
 
-public class RestaurantCrud : ICrud<Restaurant>
+public class RestaurantRepository : ICrud<Restaurant>
 {
     public void Create(Restaurant restaurant)
     {
@@ -32,5 +33,23 @@ public class RestaurantCrud : ICrud<Restaurant>
             throw new Exception("Restaurant does not exist");
         context.Restaurants.Remove(restaurant);
         context.SaveChanges();
+    }
+    
+    public static RestaurantRevenue? GetRestaurantRevenue(int restaurantId)
+    {
+        var context = new RestaurantDbContext();
+        var result = context.RestaurantRevenues
+            .FromSqlRaw("""
+                        begin
+                            declare @RestaurantId int = {0}
+                            declare @result int
+                            exec
+                                @result = dbo.RestaurantRevenue @RestaurantId
+                            select @result as Revenue
+                        end
+                        """, restaurantId)
+            .AsEnumerable()
+            .FirstOrDefault();
+        return result;
     }
 }

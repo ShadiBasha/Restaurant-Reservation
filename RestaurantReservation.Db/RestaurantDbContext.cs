@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace RestaurantReservation.Db
 {
@@ -13,6 +14,8 @@ namespace RestaurantReservation.Db
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<RestaurantRevenue> RestaurantRevenues { get; set; }
+
         public DbSet<ReservationView> ReservationViews { get; set; }
         
         public DbSet<EmployeeView> EmployeeView { get; set; }
@@ -21,11 +24,18 @@ namespace RestaurantReservation.Db
         {
             optionsBuilder.UseSqlServer(
                 @"Server=localhost\SQLEXPRESS;Database=RestaurantReservationCore;Trusted_Connection=True;TrustServerCertificate=true;"
-            );
+            ).LogTo(File.AppendText("Logs.txt").WriteLine,
+                    new[] { DbLoggerCategory.Database.Command.Name },
+                    LogLevel.Information)
+                .EnableSensitiveDataLogging();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<RestaurantRevenue>().HasNoKey().ToView(null);
+            
             modelBuilder
                 .Entity<ReservationView>(res =>
                 {
