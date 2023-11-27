@@ -7,5 +7,12 @@ public class Table
     public Restaurant Restaurant { get; set; }
     public int Capacity { get; set; }
     public ICollection<Reservation> Reservations { get; set; }
-
+    public override string ToString()
+    {
+        return $@"
+                    Table ID: {TableId}
+                    Restaurant ID: {RestaurantId}
+                    Capacity: {Capacity}
+                    ";
+    }
 }

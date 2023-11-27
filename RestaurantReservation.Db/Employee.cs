@@ -9,4 +9,13 @@ public class Employee
     public string LastName { get; set; }
     public string Position { get; set; }
     public ICollection<Order> Orders { get; set; }
+    public override string ToString()
+    {
+        return $"""
+                Employee name: {FirstName} {LastName}
+                Position: {Position}
+                Employee ID: {EmployeeId}
+                Restaurant ID: {RestaurantId}
+                """;
+    }
 }

@@ -28,12 +28,12 @@ public class CustomerRepository : ICrud<Customer>
     public void Delete(int customerId)
     {
         var context = new RestaurantDbContext();
-        var customerToDelete = context.Customers.Find(customerId);
-        if (customerToDelete == null)
+        var customer = context.Customers.Find(customerId);
+        if (customer == null)
         {
             throw new Exception("Customer does not exist");
         }
-        context.Customers.Remove(customerToDelete);
+        context.Customers.Remove(customer);
         context.SaveChanges();
     }
     

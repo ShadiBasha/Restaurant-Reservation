@@ -11,4 +11,14 @@ public class Restaurant
     public ICollection<MenuItem> MenuItems { get; set; }
     public ICollection<Table> Tables { get; set; }
     public ICollection<Reservation> Reservations { get; set; }
+    public override string ToString()
+    {
+        return $@"
+                    Restaurant ID: {RestaurantId}
+                    Name: {Name}
+                    Address: {Address}
+                    Phone Number: {PhoneNumber}
+                    Opening Hours: {OpeningHours}
+                    ";
+    }
 }

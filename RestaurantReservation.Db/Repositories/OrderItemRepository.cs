@@ -31,6 +31,7 @@ public class OrderItemRepository : ICrud<OrderItem>
         if (orderItem == null)
             throw new Exception("OrderItem does not exist");
         context.OrderItems.Remove(orderItem);
+        context.SaveChanges();
     }
     
     public static void ListOrdersAndMenuItems(int reservationId)

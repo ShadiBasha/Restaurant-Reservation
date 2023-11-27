@@ -9,4 +9,12 @@ public class Customer
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public ICollection<Reservation> Reservations { get; set; }
+    public override string ToString()
+    {
+        return $"""
+                Customer name: {FirstName} {LastName}
+                Email: {Email}
+                Phone Number: {PhoneNumber}
+                """;
+    }
 }

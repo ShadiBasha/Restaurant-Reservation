@@ -10,4 +10,14 @@ public class Order
     public DateTime OrderDate { get; set; }
     public int TotalAmount { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
+    public override string ToString()
+    {
+        return $"""
+                Order ID: {OrderId}
+                Reservation ID: {ReservationId}
+                Employee ID: {EmployeeId}
+                Order Date: {OrderDate}
+                Total Amount: {TotalAmount} units
+                """;
+    }
 }

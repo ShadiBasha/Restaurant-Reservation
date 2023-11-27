@@ -11,4 +11,17 @@ public class ReservationView
     public string RestaurantName { get; set; }
     public string Address { get; set; }
     public string RestaurantNumber { get; set; }
+    public override string ToString()
+    {
+        return $@"
+                    Customer Name: {FirstName} {LastName}
+                    Email: {Email}
+                    Customer Number: {CustomerNumber}
+                    Reservation Date: {ReservationDate}
+                    Party Size: {PartySize}
+                    Restaurant Name: {RestaurantName}
+                    Address: {Address}
+                    Restaurant Number: {RestaurantNumber}
+                    ";
+    }
 }

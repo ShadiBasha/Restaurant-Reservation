@@ -9,4 +9,13 @@ public class MenuItem
     public string Description { get; set; }
     public int Price { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
+    public override string ToString()
+    {
+        return $"""
+                Menu Item: {Name}
+                Description: {Description}
+                Price: {Price} units
+                Restaurant ID: {RestaurantId}
+                """;
+    }
 }

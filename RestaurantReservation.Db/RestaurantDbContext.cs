@@ -24,15 +24,19 @@ namespace RestaurantReservation.Db
         {
             optionsBuilder.UseSqlServer(
                 @"Server=localhost\SQLEXPRESS;Database=RestaurantReservationCore;Trusted_Connection=True;TrustServerCertificate=true;"
-            ).LogTo(File.AppendText("Logs.txt").WriteLine,
-                    new[] { DbLoggerCategory.Database.Command.Name },
-                    LogLevel.Information)
-                .EnableSensitiveDataLogging();
-
+            );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Reservation>(entity =>
+                {
+                    entity.HasOne(r => r.Table)
+                        .WithMany(t => t.Reservations)
+                        .HasForeignKey(r => r.TableId)
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+            
             modelBuilder
                 .Entity<RestaurantRevenue>().HasNoKey().ToView(null);
             

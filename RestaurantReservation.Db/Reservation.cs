@@ -14,4 +14,15 @@ public class Reservation
     public DateTime ReservationDate { get; set; }
     public int PartySize { get; set; }
     public ICollection<Order> Orders { get; set; }
+    public override string ToString()
+    {
+        return $@"
+                    Reservation ID: {ReservationId}
+                    Customer ID: {CustomerId}
+                    Restaurant ID: {RestaurantId}
+                    Table ID: {TableId}
+                    Reservation Date: {ReservationDate}
+                    Party Size: {PartySize}
+                    ";
+    }
 }
