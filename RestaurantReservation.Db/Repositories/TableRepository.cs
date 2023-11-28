@@ -1,35 +1,36 @@
 ﻿using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class TableRepository : ICrud<Table>
 {
-    public void Create(Table table)
+    public async Task CreateAsync(Table table)
     {
-        var context = new RestaurantDbContext();
-        context.Tables.Add(table);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.Tables.AddAsync(table);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int tableId, Table newTableData)
+    public async Task UpdateAsync(int tableId, Table newTableData)
     {
-        var context = new RestaurantDbContext();
-        var table = context.Tables.Find(tableId);
+        using var context = new RestaurantDbContext();
+        var table = await context.Tables.FindAsync(tableId);
         if (table == null)
             throw new Exception("Table does not exist");
         table.RestaurantId = newTableData.RestaurantId;
         table.Capacity = newTableData.Capacity;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
-    public void Delete(int tableId)
+    public async Task DeleteAsync(int tableId)
     {
         var context = new RestaurantDbContext();
-        var table = context.Tables.Find(tableId);
+        var table = await context.Tables.FindAsync(tableId);
         if (table == null)
             throw new Exception("Table does not exist");
         context.Remove(table);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
 }

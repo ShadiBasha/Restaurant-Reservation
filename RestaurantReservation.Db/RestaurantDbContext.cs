@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Views;
 
 namespace RestaurantReservation.Db
 {
@@ -29,6 +31,7 @@ namespace RestaurantReservation.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //move seeding to extention 
             modelBuilder.Entity<Reservation>(entity =>
                 {
                     entity.HasOne(r => r.Table)

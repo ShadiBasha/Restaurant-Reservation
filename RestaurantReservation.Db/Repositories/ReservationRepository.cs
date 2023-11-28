@@ -1,20 +1,21 @@
 ﻿using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class ReservationRepository : ICrud<Reservation>
 {
-    public void Create(Reservation reservation)
+    public async Task CreateAsync(Reservation reservation)
     {
-        var context = new RestaurantDbContext();
-        context.Reservations.Add(reservation);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.Reservations.AddAsync(reservation);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int reservationId, Reservation newReservationData)
+    public async Task UpdateAsync(int reservationId, Reservation newReservationData)
     {
-        var context = new RestaurantDbContext();
-        var reservation = context.Reservations.Find(reservationId);
+        using var context = new RestaurantDbContext();
+        var reservation = await context.Reservations.FindAsync(reservationId);
         if (reservation == null)
             throw new Exception("Reservation does not exist");
         reservation.CustomerId = newReservationData.CustomerId;
@@ -22,19 +23,19 @@ public class ReservationRepository : ICrud<Reservation>
         reservation.TableId = newReservationData.TableId;
         reservation.ReservationDate = newReservationData.ReservationDate;
         reservation.PartySize = newReservationData.PartySize;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int reservationId)
+    public async Task DeleteAsync(int reservationId)
     {
-        var context = new RestaurantDbContext();
-        var reservation = context.Reservations.Find(reservationId);
+        using var context = new RestaurantDbContext();
+        var reservation = await context.Reservations.FindAsync(reservationId);
         if (reservation == null)
         {
             throw new Exception("Reservation does not exist");
         }
         context.Remove(reservation);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static void GetReservationsByCustomer(int customerId)

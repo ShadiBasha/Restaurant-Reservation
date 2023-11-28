@@ -1,4 +1,4 @@
-﻿namespace RestaurantReservation.Db;
+﻿namespace RestaurantReservation.Db.Views;
 
 public class ReservationView
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace RestaurantReservation.Db;
+namespace RestaurantReservation.Db.Models;
 
 public class Customer
 {

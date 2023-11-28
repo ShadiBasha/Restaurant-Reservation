@@ -1,37 +1,38 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class OrderItemRepository : ICrud<OrderItem>
 {
-    public void Create(OrderItem orderItem)
+    public async Task CreateAsync(OrderItem orderItem)
     {
-        var context = new RestaurantDbContext();
-        context.OrderItems.Add(orderItem);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.OrderItems.AddAsync(orderItem);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int orderItemId, OrderItem newOrderItemData)
+    public async Task UpdateAsync(int orderItemId, OrderItem newOrderItemData)
     {
-        var context = new RestaurantDbContext();
-        var orderItem = context.OrderItems.Find(orderItemId);
+        using var context = new RestaurantDbContext();
+        var orderItem = await context.OrderItems.FindAsync(orderItemId);
         if (orderItem == null)
             throw new Exception("OrderItem does not exist");
         orderItem.OrderId = newOrderItemData.OrderId;
         orderItem.MenuItemId = newOrderItemData.MenuItemId;
         orderItem.Quantity = newOrderItemData.Quantity;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int orderItemId)
+    public async Task DeleteAsync(int orderItemId)
     {
         var context = new RestaurantDbContext();
-        var orderItem = context.OrderItems.Find(orderItemId);
+        var orderItem = await context.OrderItems.FindAsync(orderItemId);
         if (orderItem == null)
             throw new Exception("OrderItem does not exist");
         context.OrderItems.Remove(orderItem);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static void ListOrdersAndMenuItems(int reservationId)

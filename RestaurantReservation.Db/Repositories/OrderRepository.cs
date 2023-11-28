@@ -1,38 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class OrderRepository : ICrud<Order>
 {
-    public void Create(Order order)
+    public async Task CreateAsync(Order order)
     {
-        var context = new RestaurantDbContext();
-        context.Add(order);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.AddAsync(order);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int orderId, Order newOrderData)
+    public async Task UpdateAsync(int orderId, Order newOrderData)
     {
-        var context = new RestaurantDbContext();
-        var order = context.Orders.Find(orderId);
+        using var context = new RestaurantDbContext();
+        var order = await context.Orders.FindAsync(orderId);
         if (order == null)
             throw new Exception("Order does not exist");
         order.ReservationId = newOrderData.ReservationId;
         order.EmployeeId = newOrderData.EmployeeId;
         order.OrderDate = newOrderData.OrderDate;
         order.TotalAmount = newOrderData.TotalAmount;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int orderId)
+    public async Task DeleteAsync(int orderId)
     {
-        var context = new RestaurantDbContext();
-        var order = context.Orders.Find(orderId);
+        using var context = new RestaurantDbContext();
+        var order = await context.Orders.FindAsync(orderId);
         if (order == null)
             throw new Exception("Order does not exist"); 
         context.Orders.Remove(order);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static void CalculateAverageOrderAmount(int employeeId)

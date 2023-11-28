@@ -1,37 +1,38 @@
 ﻿using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class EmployeeRepository : ICrud<Employee>
 {
-    public void Create(Employee employee)
+    public async Task CreateAsync(Employee employee)
     {
-        var context = new RestaurantDbContext();
-        context.Employees.Add(employee);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.Employees.AddRangeAsync(employee);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int employeeId, Employee newEmployeeData)
+    public async Task UpdateAsync(int employeeId, Employee newEmployeeData)
     {
-        var context = new RestaurantDbContext();
-        var employee = context.Employees.Find(employeeId);
+        using var context = new RestaurantDbContext();
+        var employee = await context.Employees.FindAsync(employeeId);
         if (employee == null)
             throw new Exception("Employee does not exist");
         employee.RestaurantId = newEmployeeData.RestaurantId;
         employee.FirstName = newEmployeeData.FirstName;
         employee.LastName = newEmployeeData.LastName;
         employee.Position = newEmployeeData.Position;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int employeeId)
+    public async Task DeleteAsync(int employeeId)
     {
-        var context = new RestaurantDbContext();
-        var employee = context.Employees.Find(employeeId);
+        using var context = new RestaurantDbContext();
+        var employee = await context.Employees.FindAsync(employeeId);
         if (employee == null)
             throw new Exception("Employee does not exist");
         context.Employees.Remove(employee);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static void ListManagers()

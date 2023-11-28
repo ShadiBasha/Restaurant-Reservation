@@ -1,43 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class MenuItemRepository : ICrud<MenuItem>
 {
-    public void Create(MenuItem item)
+    public async Task CreateAsync(MenuItem item)
     {
-        var context = new RestaurantDbContext();
-        context.MenuItems.Add(item);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.MenuItems.AddAsync(item);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int itemId, MenuItem newItemData)
+    public async Task UpdateAsync(int itemId, MenuItem newItemData)
     {
-        var context = new RestaurantDbContext();
-        var item = context.MenuItems.Find(itemId);
+        using var context = new RestaurantDbContext();
+        var item = await context.MenuItems.FindAsync(itemId);
         if (item == null)
             throw new Exception("Item does not exist");
         item.RestaurantId = newItemData.RestaurantId;
         item.Name = newItemData.Name;
         item.Description = newItemData.Description;
         item.Price = newItemData.Price;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int itemId)
+    public async Task DeleteAsync(int itemId)
     {
-        var context = new RestaurantDbContext();
-        var item = context.MenuItems.Find(itemId);
+        using var context = new RestaurantDbContext();
+        var item = await context.MenuItems.FindAsync(itemId);
         if (item == null)
             throw new Exception("Item does not exist");
         context.MenuItems.Remove(item);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static void ListOrderedMenuItems(int reservationId)
     {
-        var context = new RestaurantDbContext();
+        using var context = new RestaurantDbContext();
         var ordersList = context.Orders
             .Include(order => order.OrderItems)
             .ThenInclude(item => item.MenuItem)

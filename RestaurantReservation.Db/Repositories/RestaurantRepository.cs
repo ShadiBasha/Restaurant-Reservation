@@ -1,38 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Interfaces;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
 public class RestaurantRepository : ICrud<Restaurant>
 {
-    public void Create(Restaurant restaurant)
+    public async Task CreateAsync(Restaurant restaurant)
     {
-        var context = new RestaurantDbContext();
-        context.Restaurants.Add(restaurant);
-        context.SaveChanges();
+        using var context = new RestaurantDbContext();
+        await context.Restaurants.AddAsync(restaurant);
+        await context.SaveChangesAsync();
     }
 
-    public void Update(int restaurantId, Restaurant newRestaurantData)
+    public async Task UpdateAsync(int restaurantId, Restaurant newRestaurantData)
     {
         var context = new RestaurantDbContext();
-        var restaurant = context.Restaurants.Find(restaurantId);
+        var restaurant = await context.Restaurants.FindAsync(restaurantId);
         if (restaurant == null)
             throw new Exception("Restaurant does not exist");
         restaurant.Name = newRestaurantData.Name;
         restaurant.Address = newRestaurantData.Address;
         restaurant.PhoneNumber = newRestaurantData.PhoneNumber;
         restaurant.OpeningHours = newRestaurantData.OpeningHours;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void Delete(int restaurantId)
+    public async Task DeleteAsync(int restaurantId)
     {
-        var context = new RestaurantDbContext();
-        var restaurant = context.Restaurants.Find(restaurantId);
+        using var context = new RestaurantDbContext();
+        var restaurant = await context.Restaurants.FindAsync(restaurantId);
         if (restaurant == null)
-            throw new Exception("Restaurant does not exist");
+            throw new Exception("Restaurant does not exist"); 
         context.Restaurants.Remove(restaurant);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
     
     public static RestaurantRevenue? GetRestaurantRevenue(int restaurantId)

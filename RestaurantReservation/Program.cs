@@ -1,4 +1,5 @@
 ﻿using RestaurantReservation.Db;
+using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Repositories;
 
 namespace RestaurantReservation
@@ -7,7 +8,7 @@ namespace RestaurantReservation
     {
         const string Line = "---------------";
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             while (true)
             {
@@ -27,28 +28,28 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CustomerOperations();
+                        await CustomerOperations();
                         break;
                     case "2":
-                        EmployeeOperations();
+                        await EmployeeOperations();
                         break;
                     case "3":
-                        MenuItemOperations();
+                        await MenuItemOperations();
                         break;
                     case "4":
-                        OrderItemOperations();
+                        await OrderItemOperations();
                         break;
                     case "5":
-                        OrderOperations();
+                        await OrderOperations();
                         break;
                     case "6":
-                        ReservationOperations();
+                        await ReservationOperations();
                         break;
                     case "7":
-                        RestaurantOperations();
+                        await RestaurantOperations();
                         break;
                     case "8":
-                        TableOperations();
+                        await TableOperations();
                         break;
                     case "0":
                         Environment.Exit(0);
@@ -60,10 +61,10 @@ namespace RestaurantReservation
             }
         }
 
-        static void TableOperations()
+        static async Task TableOperations()
         {
             var tableRepository = new TableRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             
             while (true)
             {
@@ -79,16 +80,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateTable(tableRepository);
+                        await CreateTable(tableRepository);
                         break;
                     case "2":
                         DisplayTables(context.Tables.ToList());
                         break;
                     case "3":
-                        UpdateTable(tableRepository);
+                        await UpdateTable(tableRepository);
                         break;
                     case "4":
-                        DeleteTable(tableRepository);
+                        await DeleteTable(tableRepository);
                         break;
                     case "0":
                         return;
@@ -99,7 +100,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateTable(TableRepository repository)
+        static async Task CreateTable(TableRepository repository)
         {
             var newTable = new Table
             {
@@ -107,7 +108,7 @@ namespace RestaurantReservation
                 Capacity = int.Parse(GetInput("Enter table capacity: "))
             };
 
-            repository.Create(newTable);
+            await repository.CreateAsync(newTable);
             Console.WriteLine("Table created successfully.");
         }
 
@@ -117,7 +118,7 @@ namespace RestaurantReservation
             DisplayEntities(tables);
         }
 
-        static void UpdateTable(TableRepository repository)
+        static async Task UpdateTable(TableRepository repository)
         {
             var tableId = int.Parse(GetInput("Enter table ID to update: "));
 
@@ -127,21 +128,21 @@ namespace RestaurantReservation
                 Capacity = int.Parse(GetInput("Enter updated table capacity: "))
             };
 
-            repository.Update(tableId, updatedTableData);
+            await repository.UpdateAsync(tableId, updatedTableData);
             Console.WriteLine("Table updated successfully.");
         }
 
-        static void DeleteTable(TableRepository repository)
+        static async Task DeleteTable(TableRepository repository)
         {
             var tableId = int.Parse(GetInput("Enter table ID to delete: "));
-            repository.Delete(tableId);
+            await repository.DeleteAsync(tableId);
             Console.WriteLine("Table deleted successfully.");
         }
         
-        static void RestaurantOperations()
+        static async Task RestaurantOperations()
         {
             var restaurantRepository = new RestaurantRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             
             while (true)
             {
@@ -158,16 +159,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateRestaurant(restaurantRepository);
+                        await CreateRestaurant(restaurantRepository);
                         break;
                     case "2":
                         DisplayRestaurants(context.Restaurants.ToList());
                         break;
                     case "3":
-                        UpdateRestaurant(restaurantRepository);
+                        await UpdateRestaurant(restaurantRepository);
                         break;
                     case "4":
-                        DeleteRestaurant(restaurantRepository);
+                        await DeleteRestaurant(restaurantRepository);
                         break;
                     case "5":
                         GetRestaurantRevenue(restaurantRepository);
@@ -181,7 +182,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateRestaurant(RestaurantRepository repository)
+        static async Task CreateRestaurant(RestaurantRepository repository)
         {
             var newRestaurant = new Restaurant
             {
@@ -191,7 +192,7 @@ namespace RestaurantReservation
                 OpeningHours = GetInput("Enter restaurant opening hours: ")
             };
 
-            repository.Create(newRestaurant);
+            await repository.CreateAsync(newRestaurant);
             Console.WriteLine("Restaurant created successfully.");
         }
 
@@ -201,7 +202,7 @@ namespace RestaurantReservation
             DisplayEntities(restaurants);
         }
 
-        static void UpdateRestaurant(RestaurantRepository repository)
+        static async Task UpdateRestaurant(RestaurantRepository repository)
         {
             var restaurantId = int.Parse(GetInput("Enter restaurant ID to update: "));
 
@@ -213,14 +214,14 @@ namespace RestaurantReservation
                 OpeningHours = GetInput("Enter updated restaurant opening hours: ")
             };
 
-            repository.Update(restaurantId, updatedRestaurantData);
+            await repository.UpdateAsync(restaurantId, updatedRestaurantData);
             Console.WriteLine("Restaurant updated successfully.");
         }
 
-        static void DeleteRestaurant(RestaurantRepository repository)
+        static async Task DeleteRestaurant(RestaurantRepository repository)
         {
             var restaurantId = int.Parse(GetInput("Enter restaurant ID to delete: "));
-            repository.Delete(restaurantId);
+            await repository.DeleteAsync(restaurantId);
             Console.WriteLine("Restaurant deleted successfully.");
         }
 
@@ -231,10 +232,10 @@ namespace RestaurantReservation
             Console.WriteLine($"Restaurant {restaurantId} Revenue: {restaurantRevenue?.Revenue ?? 0}$");
         }
         
-        static void ReservationOperations()
+        static async Task ReservationOperations()
         {
             var reservationRepository = new ReservationRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             
             while (true)
             {
@@ -251,16 +252,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateReservation(reservationRepository);
+                        await CreateReservation(reservationRepository);
                         break;
                     case "2":
                         DisplayReservations(context.Reservations.ToList());
                         break;
                     case "3":
-                        UpdateReservation(reservationRepository);
+                        await UpdateReservation(reservationRepository);
                         break;
                     case "4":
-                        DeleteReservation(reservationRepository);
+                        await DeleteReservation(reservationRepository);
                         break;
                     case "5":
                         GetReservationsByCustomer(reservationRepository);
@@ -274,7 +275,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateReservation(ReservationRepository repository)
+        static async Task CreateReservation(ReservationRepository repository)
         {
             var newReservation = new Reservation
             {
@@ -285,7 +286,7 @@ namespace RestaurantReservation
                 PartySize = int.Parse(GetInput("Enter party size: "))
             };
 
-            repository.Create(newReservation);
+            await repository.CreateAsync(newReservation);
             Console.WriteLine("Reservation created successfully.");
         }
 
@@ -295,7 +296,7 @@ namespace RestaurantReservation
             DisplayEntities(reservations);
         }
 
-        static void UpdateReservation(ReservationRepository repository)
+        static async Task UpdateReservation(ReservationRepository repository)
         {
             var reservationId = int.Parse(GetInput("Enter reservation ID to update: "));
 
@@ -308,14 +309,14 @@ namespace RestaurantReservation
                 PartySize = int.Parse(GetInput("Enter updated party size: "))
             };
 
-            repository.Update(reservationId, updatedReservationData);
+            await repository.UpdateAsync(reservationId, updatedReservationData);
             Console.WriteLine("Reservation updated successfully.");
         }
 
-        static void DeleteReservation(ReservationRepository repository)
+        static async Task DeleteReservation(ReservationRepository repository)
         {
             var reservationId = int.Parse(GetInput("Enter reservation ID to delete: "));
-            repository.Delete(reservationId);
+            await repository.DeleteAsync(reservationId);
             Console.WriteLine("Reservation deleted successfully.");
         }
 
@@ -325,10 +326,10 @@ namespace RestaurantReservation
             ReservationRepository.GetReservationsByCustomer(customerId);
         }
         
-        static void OrderOperations()
+        static async Task OrderOperations()
         {
             var orderRepository = new OrderRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
 
             while (true)
             {
@@ -345,16 +346,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateOrder(orderRepository);
+                        await CreateOrder(orderRepository);
                         break;
                     case "2":
                         DisplayOrders(context.Orders.ToList());
                         break;
                     case "3":
-                        UpdateOrder(orderRepository);
+                        await UpdateOrder(orderRepository);
                         break;
                     case "4":
-                        DeleteOrder(orderRepository);
+                        await DeleteOrder(orderRepository);
                         break;
                     case "5":
                         CalculateAverageOrderAmount(orderRepository);
@@ -368,7 +369,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateOrder(OrderRepository repository)
+        static async Task CreateOrder(OrderRepository repository)
         {
             var newOrder = new Order
             {
@@ -378,7 +379,7 @@ namespace RestaurantReservation
                 TotalAmount = int.Parse(GetInput("Enter total amount: "))
             };
 
-            repository.Create(newOrder);
+            await repository.CreateAsync(newOrder);
             Console.WriteLine("Order created successfully.");
         }
 
@@ -388,7 +389,7 @@ namespace RestaurantReservation
             DisplayEntities(orders);
         }
 
-        static void UpdateOrder(OrderRepository repository)
+        static async Task UpdateOrder(OrderRepository repository)
         {
             var orderId = int.Parse(GetInput("Enter order ID to update: "));
 
@@ -400,14 +401,14 @@ namespace RestaurantReservation
                 TotalAmount = int.Parse(GetInput("Enter updated total amount: "))
             };
 
-            repository.Update(orderId, updatedOrderData);
+            await repository.UpdateAsync(orderId, updatedOrderData);
             Console.WriteLine("Order updated successfully.");
         }
 
-        static void DeleteOrder(OrderRepository repository)
+        static async Task DeleteOrder(OrderRepository repository)
         {
             var orderId = int.Parse(GetInput("Enter order ID to delete: "));
-            repository.Delete(orderId);
+            await repository.DeleteAsync(orderId);
             Console.WriteLine("Order deleted successfully.");
         }
 
@@ -418,10 +419,10 @@ namespace RestaurantReservation
         }
 
 
-        static void OrderItemOperations()
+        static async Task OrderItemOperations()
         {
             var orderItemRepository = new OrderItemRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             
             while (true)
             {
@@ -438,16 +439,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateOrderItem(orderItemRepository);
+                        await CreateOrderItem(orderItemRepository);
                         break;
                     case "2":
                         DisplayOrderItems(context.OrderItems.ToList());
                         break;
                     case "3":
-                        UpdateOrderItem(orderItemRepository);
+                        await UpdateOrderItem(orderItemRepository);
                         break;
                     case "4":
-                        DeleteOrderItem(orderItemRepository);
+                        await DeleteOrderItem(orderItemRepository);
                         break;
                     case "5":
                         ListOrdersAndMenuItems(orderItemRepository);
@@ -461,7 +462,7 @@ namespace RestaurantReservation
             }
         }
         
-        static void CreateOrderItem(OrderItemRepository repository)
+        static async Task CreateOrderItem(OrderItemRepository repository)
         {
             var newOrderItem = new OrderItem
             {
@@ -470,7 +471,7 @@ namespace RestaurantReservation
                 Quantity = int.Parse(GetInput("Enter quantity: "))
             };
 
-            repository.Create(newOrderItem);
+            await repository.CreateAsync(newOrderItem);
             Console.WriteLine("Order item created successfully.");
         }
 
@@ -480,7 +481,7 @@ namespace RestaurantReservation
             DisplayEntities(orderItems);
         }
 
-        static void UpdateOrderItem(OrderItemRepository repository)
+        static async Task UpdateOrderItem(OrderItemRepository repository)
         {
             var orderItemId = int.Parse(GetInput("Enter order item ID to update: "));
 
@@ -491,14 +492,14 @@ namespace RestaurantReservation
                 Quantity = int.Parse(GetInput("Enter updated quantity: "))
             };
 
-            repository.Update(orderItemId, updatedOrderItemData);
+            await repository.UpdateAsync(orderItemId, updatedOrderItemData);
             Console.WriteLine("Order item updated successfully.");
         }
 
-        static void DeleteOrderItem(OrderItemRepository repository)
+        static async Task DeleteOrderItem(OrderItemRepository repository)
         {
             var orderItemId = int.Parse(GetInput("Enter order item ID to delete: "));
-            repository.Delete(orderItemId);
+            await repository.DeleteAsync(orderItemId);
             Console.WriteLine("Order item deleted successfully.");
         }
 
@@ -507,7 +508,7 @@ namespace RestaurantReservation
             var reservationId = int.Parse(GetInput("Enter reservation ID: "));
             OrderItemRepository.ListOrdersAndMenuItems(reservationId);
         }
-        static void MenuItemOperations()
+        static async Task MenuItemOperations()
         {
             var menuItemRepository = new MenuItemRepository();
             var context = new RestaurantDbContext();
@@ -526,16 +527,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateMenuItem(menuItemRepository);
+                        await CreateMenuItem(menuItemRepository);
                         break;
                     case "2":
                         DisplayMenuItems(context.MenuItems.ToList());
                         break;
                     case "3":
-                        UpdateMenuItem(menuItemRepository);
+                        await UpdateMenuItem(menuItemRepository);
                         break;
                     case "4":
-                        DeleteMenuItem(menuItemRepository);
+                        await DeleteMenuItem(menuItemRepository);
                         break;
                     case "5":
                         ListOrderedMenuItems(menuItemRepository);
@@ -549,7 +550,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateMenuItem(MenuItemRepository repository)
+        static async Task CreateMenuItem(MenuItemRepository repository)
         {
             var newMenuItem = new MenuItem
             {
@@ -559,7 +560,7 @@ namespace RestaurantReservation
                 Price = int.Parse(GetInput("Enter menu item price: "))
             };
 
-            repository.Create(newMenuItem);
+            await repository.CreateAsync(newMenuItem);
             Console.WriteLine("Menu item created successfully.");
         }
 
@@ -569,7 +570,7 @@ namespace RestaurantReservation
             DisplayEntities(menuItems);
         }
 
-        static void UpdateMenuItem(MenuItemRepository repository)
+        static async Task UpdateMenuItem(MenuItemRepository repository)
         {
             var itemId = int.Parse(GetInput("Enter menu item ID to update: "));
 
@@ -581,14 +582,14 @@ namespace RestaurantReservation
                 Price = int.Parse(GetInput("Enter updated menu item price: "))
             };
 
-            repository.Update(itemId, updatedMenuItemData);
+            await repository.UpdateAsync(itemId, updatedMenuItemData);
             Console.WriteLine("Menu item updated successfully.");
         }
 
-        static void DeleteMenuItem(MenuItemRepository repository)
+        static async Task DeleteMenuItem(MenuItemRepository repository)
         {
             var itemId = int.Parse(GetInput("Enter menu item ID to delete: "));
-            repository.Delete(itemId);
+            await repository.DeleteAsync(itemId);
             Console.WriteLine("Menu item deleted successfully.");
         }
 
@@ -598,10 +599,10 @@ namespace RestaurantReservation
             MenuItemRepository.ListOrderedMenuItems(reservationId);
         }
 
-        static void CustomerOperations()
+        static async Task CustomerOperations()
         {
             var customerRepository = new CustomerRepository();
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             while (true)
             {
                 Console.WriteLine("Customer Operations:");
@@ -617,19 +618,19 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateCustomer(customerRepository);
+                        await CreateCustomer(customerRepository);
                         break;
-                    case "2":
+                    case "2": 
                         DisplayCustomers(context.Customers.ToList());
                         break;
                     case "3":
-                        UpdateCustomer(customerRepository);
+                        await UpdateCustomer(customerRepository);
                         break;
                     case "4":
-                        GetCustomersWithPartySizeGreaterThan(customerRepository);
+                        GetCustomersWithPartySizeGreaterThan();
                         break;
                     case "5":
-                        DeleteCustomer(customerRepository);
+                        await DeleteCustomer(customerRepository);
                         break;
                     case "0":
                         return;
@@ -640,9 +641,9 @@ namespace RestaurantReservation
             }
         }
 
-        static void EmployeeOperations()
+        static async Task EmployeeOperations()
         {
-            var context = new RestaurantDbContext();
+            using var context = new RestaurantDbContext();
             var employeeRepository = new EmployeeRepository();
 
             while (true)
@@ -660,16 +661,16 @@ namespace RestaurantReservation
                 switch (choice)
                 {
                     case "1":
-                        CreateEmployee(employeeRepository);
+                        await CreateEmployee(employeeRepository);
                         break;
                     case "2":
                         DisplayEmployees(context.Employees.ToList());
                         break;
                     case "3":
-                        UpdateEmployee(employeeRepository);
+                        await UpdateEmployee(employeeRepository);
                         break;
                     case "4":
-                        DeleteEmployee(employeeRepository);
+                        await DeleteEmployee(employeeRepository);
                         break;
                     case "5":
                         EmployeeRepository.ListManagers();
@@ -683,7 +684,7 @@ namespace RestaurantReservation
             }
         }
 
-        static void CreateCustomer(CustomerRepository repository)
+        static async Task CreateCustomer(CustomerRepository repository)
         {
             var newCustomer = new Customer
             {
@@ -693,7 +694,7 @@ namespace RestaurantReservation
                 PhoneNumber = GetInput("Enter phone number: ")
             };
 
-            repository.Create(newCustomer);
+            await repository.CreateAsync(newCustomer);
             Console.WriteLine("Customer created successfully.");
         }
 
@@ -703,7 +704,7 @@ namespace RestaurantReservation
             DisplayEntities(customers);
         }
 
-        static void UpdateCustomer(CustomerRepository repository)
+        static async Task UpdateCustomer(CustomerRepository repository)
         {
             var customerId = int.Parse(GetInput("Enter customer ID to update: "));
 
@@ -715,11 +716,11 @@ namespace RestaurantReservation
                 PhoneNumber = GetInput("Enter updated phone number: ")
             };
 
-            repository.Update(customerId, updatedCustomerData);
+            await repository.UpdateAsync(customerId, updatedCustomerData);
             Console.WriteLine("Customer updated successfully.");
         }
 
-        static void GetCustomersWithPartySizeGreaterThan(CustomerRepository repository)
+        static void GetCustomersWithPartySizeGreaterThan()
         {
             var partySize = int.Parse(GetInput("Enter party size: "));
             var customersWithPartySizeGreaterThan = CustomerRepository.GetCustomersWithPartySizeGreaterThan(partySize);
@@ -728,14 +729,14 @@ namespace RestaurantReservation
             DisplayEntities(customersWithPartySizeGreaterThan);
         }
 
-        static void DeleteCustomer(CustomerRepository repository)
+        static async Task DeleteCustomer(CustomerRepository repository)
         {
             var customerId = int.Parse(GetInput("Enter customer ID to delete: "));
-            repository.Delete(customerId);
+            await repository.DeleteAsync(customerId);
             Console.WriteLine("Customer deleted successfully.");
         }
 
-        static void CreateEmployee(EmployeeRepository repository)
+        static async Task CreateEmployee(EmployeeRepository repository)
         {
             var newEmployee = new Employee
             {
@@ -745,7 +746,7 @@ namespace RestaurantReservation
                 RestaurantId = int.Parse(GetInput("Restaurant ID:"))
             };
 
-            repository.Create(newEmployee);
+            await repository.CreateAsync(newEmployee);
             Console.WriteLine("Employee created successfully.");
         }
 
@@ -755,7 +756,7 @@ namespace RestaurantReservation
             DisplayEntities(employees);
         }
 
-        static void UpdateEmployee(EmployeeRepository repository)
+        static async Task UpdateEmployee(EmployeeRepository repository)
         {
             var employeeId = int.Parse(GetInput("Enter employee ID to update: "));
 
@@ -767,14 +768,14 @@ namespace RestaurantReservation
                 RestaurantId = int.Parse(GetInput("Restaurant ID:"))
             };
 
-            repository.Update(employeeId, updatedEmployeeData);
+            await repository.UpdateAsync(employeeId, updatedEmployeeData);
             Console.WriteLine("Employee updated successfully.");
         }
 
-        static void DeleteEmployee(EmployeeRepository repository)
+        static async Task DeleteEmployee(EmployeeRepository repository)
         {
             var employeeId = int.Parse(GetInput("Enter employee ID to delete: "));
-            repository.Delete(employeeId);
+            await repository.DeleteAsync(employeeId);
             Console.WriteLine("Employee deleted successfully.");
         }
 
