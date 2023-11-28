@@ -4,14 +4,14 @@
     "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj": {
+    "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\RestaurantReservation.Db.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj",
-        "projectName": "RestaurantReservation",
-        "projectPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj",
+        "projectUniqueName": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\RestaurantReservation.Db.csproj",
+        "projectName": "RestaurantReservation.Db",
+        "projectPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\RestaurantReservation.Db.csproj",
         "packagesPath": "C:\\Users\\Shadi Basha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\obj\\",
+        "outputPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shadi Basha\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -37,6 +37,87 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj",
+        "projectName": "RestaurantReservation",
+        "projectPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\RestaurantReservation.csproj",
+        "packagesPath": "C:\\Users\\Shadi Basha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Shadi Basha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\RestaurantReservation.Db.csproj": {
+                "projectPath": "C:\\Users\\Shadi Basha\\RiderProjects\\RestaurantReservation\\RestaurantReservation.Db\\RestaurantReservation.Db.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
